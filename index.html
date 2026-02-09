@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trauma Finder | Discover Your Hidden Blocks</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #6B5B95;
+            --secondary: #88B04B;
+            --accent: #F7CAC9;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --calm: #E8F4F8;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .header p { opacity: 0.9; font-size: 1.1rem; }
+        
+        /* Card */
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        
+        /* Welcome Screen */
+        .welcome { text-align: center; }
+        .welcome h2 { color: var(--primary); font-size: 1.8rem; margin-bottom: 20px; }
+        .welcome p { color: #666; line-height: 1.8; margin-bottom: 30px; }
+        .welcome-icon { font-size: 4rem; margin-bottom: 20px; }
+        
+        /* Start Button */
+        .btn {
+            background: linear-gradient(135deg, var(--primary), #8B7FB5);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(107, 91, 149, 0.4); }
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        .btn-secondary:hover { background: var(--primary); color: white; }
+        
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+        .progress-bar {
+            background: #E0E0E0;
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        /* Question */
+        .question-section { display: none; }
+        .question-section.active { display: block; }
+        .category-label {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .question-text {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        
+        /* Options */
+        .options { display: flex; flex-direction: column; gap: 12px; }
+        .option {
+            background: var(--calm);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 18px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .option:hover { border-color: var(--primary); background: white; }
+        .option.selected { border-color: var(--primary); background: white; box-shadow: 0 4px 15px rgba(107, 91, 149, 0.2); }
+        .option-circle {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #CCC;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .option.selected .option-circle { border-color: var(--primary); background: var(--primary); }
+        .option.selected .option-circle::after { content: '✓'; color: white; font-size: 14px; }
+        .option-text { font-size: 1rem; color: var(--dark); }
+        
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+        .nav-btn {
+            padding: 14px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .nav-btn.back {
+            background: #EEE;
+            border: none;
+            color: #666;
+        }
+        .nav-btn.next {
+            background: var(--primary);
+            border: none;
+            color: white;
+            margin-left: auto;
+        }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* Results */
+        .results { display: none; }
+        .results.active { display: block; }
+        .results h2 { color: var(--primary); font-size: 1.8rem; margin-bottom: 25px; text-align: center; }
+        
+        .trauma-card {
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFF 100%);
+            border-left: 4px solid;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .trauma-card.high { border-color: #E53935; }
+        .trauma-card.medium { border-color: #FB8C00; }
+        .trauma-card.low { border-color: var(--secondary); }
+        
+        .trauma-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .trauma-title { font-weight: 700; font-size: 1.1rem; color: var(--dark); }
+        .trauma-level {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .trauma-level.high { background: #FFEBEE; color: #C62828; }
+        .trauma-level.medium { background: #FFF3E0; color: #EF6C00; }
+        .trauma-level.low { background: #E8F5E9; color: #2E7D32; }
+        
+        .trauma-desc { color: #666; line-height: 1.6; font-size: 0.95rem; }
+        .trauma-signs { margin-top: 12px; }
+        .trauma-signs strong { color: var(--dark); font-size: 0.9rem; }
+        .trauma-signs ul { margin-top: 8px; padding-left: 20px; color: #666; font-size: 0.9rem; }
+        .trauma-signs li { margin-bottom: 4px; }
+        
+        /* Healing Section */
+        .healing-section {
+            background: linear-gradient(135deg, #E8F5E9 0%, #FFF 100%);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        .healing-section h3 { color: #2E7D32; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .healing-list { list-style: none; }
+        .healing-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #E0E0E0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .healing-list li:last-child { border-bottom: none; }
+        .healing-icon { font-size: 1.2rem; }
+        
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #EEE;
+        }
+        .cta-section p { color: #666; margin-bottom: 20px; }
+        
+        /* Disclaimer */
+        .disclaimer {
+            background: #FFF8E1;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        /* Hidden */
+        .hidden { display: none !important; }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .card { padding: 25px; }
+            .question-text { font-size: 1.2rem; }
+            .header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🌿 Trauma Finder</h1>
+            <p>Discover hidden blocks holding you back</p>
+        </header>
+        
+        <!-- Welcome Screen -->
+        <div class="card welcome" id="welcome">
+            <div class="welcome-icon">🔮</div>
+            <h2>Uncover Your Hidden Patterns</h2>
+            <p>
+                This assessment helps identify potential emotional wounds and trauma patterns 
+                that may be affecting your life, relationships, and success. 
+                <br><br>
+                Answer honestly — there are no right or wrong answers. 
+                Your responses are private and not stored anywhere.
+            </p>
+            <button class="btn" onclick="startAssessment()">Begin Assessment</button>
+            <p style="margin-top: 20px; font-size: 0.9rem; color: #888;">⏱️ Takes about 5-7 minutes</p>
+        </div>
+        
+        <!-- Questions -->
+        <div class="card question-section" id="questions">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress" style="width: 0%"></div>
+                </div>
+                <div class="progress-text">Question <span id="currentQ">1</span> of <span id="totalQ">24</span></div>
+            </div>
+            
+            <div id="questionContainer">
+                <span class="category-label" id="categoryLabel">Childhood</span>
+                <p class="question-text" id="questionText"></p>
+                <div class="options" id="optionsContainer"></div>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="nav-btn back" id="backBtn" onclick="prevQuestion()">← Back</button>
+                <button class="nav-btn next" id="nextBtn" onclick="nextQuestion()" disabled>Next →</button>
+            </div>
+        </div>
+        
+        <!-- Results -->
+        <div class="card results" id="results">
+            <h2>🔍 Your Assessment Results</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                Based on your responses, here are potential areas to explore:
+            </p>
+            <div id="resultsContainer"></div>
+            
+            <div class="healing-section">
+                <h3>🌱 Recommended Healing Steps</h3>
+                <ul class="healing-list" id="healingList"></ul>
+            </div>
+            
+            <div class="cta-section">
+                <p>Ready to start your healing journey?</p>
+                <button class="btn" onclick="location.href='https://divinesuccessflow.github.io/ai-prosperity/'">
+                    🚀 Join AI Prosperity Program
+                </button>
+                <br><br>
+                <button class="btn btn-secondary" onclick="restartAssessment()">
+                    🔄 Take Assessment Again
+                </button>
+            </div>
+            
+            <div class="disclaimer">
+                ⚠️ <strong>Disclaimer:</strong> This assessment is for self-reflection only and is not a clinical diagnosis. 
+                If you're experiencing significant distress, please consult a licensed mental health professional.
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const categories = {
+            childhood: { name: "Childhood & Family", icon: "👶" },
+            attachment: { name: "Attachment & Trust", icon: "💔" },
+            selfworth: { name: "Self-Worth", icon: "🪞" },
+            abandonment: { name: "Abandonment", icon: "🚪" },
+            rejection: { name: "Rejection", icon: "🙈" },
+            control: { name: "Control & Safety", icon: "🛡️" },
+            emotional: { name: "Emotional Expression", icon: "😶" },
+            success: { name: "Success & Money", icon: "💰" }
+        };
+        
+        const questions = [
+            // Childhood (1-3)
+            { category: "childhood", text: "Growing up, I felt truly seen and heard by my parents/caregivers.", options: ["Always", "Often", "Sometimes", "Rarely", "Never"] },
+            { category: "childhood", text: "I experienced criticism, harsh discipline, or emotional neglect as a child.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "childhood", text: "My childhood home felt safe and stable.", options: ["Always", "Often", "Sometimes", "Rarely", "Never"] },
+            
+            // Attachment (4-6)
+            { category: "attachment", text: "I find it difficult to trust people, even those close to me.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "attachment", text: "I tend to push people away when they get too close.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "attachment", text: "I feel anxious or insecure in my close relationships.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            
+            // Self-Worth (7-9)
+            { category: "selfworth", text: "I often feel like I'm not good enough.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "selfworth", text: "I struggle to accept compliments or believe positive things about myself.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "selfworth", text: "I compare myself negatively to others.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            
+            // Abandonment (10-12)
+            { category: "abandonment", text: "I have an intense fear of being left or abandoned.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "abandonment", text: "When someone is late or doesn't respond quickly, I assume they're leaving me.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "abandonment", text: "I've experienced significant losses or separations that still affect me.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            
+            // Rejection (13-15)
+            { category: "rejection", text: "I avoid situations where I might be rejected or judged.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "rejection", text: "I take criticism or feedback very personally.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "rejection", text: "I often feel like an outsider or that I don't belong.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            
+            // Control (16-18)
+            { category: "control", text: "I feel anxious when I'm not in control of a situation.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "control", text: "I have difficulty delegating tasks to others.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "control", text: "I feel unsafe or vulnerable in unpredictable situations.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            
+            // Emotional (19-21)
+            { category: "emotional", text: "I suppress or hide my emotions from others.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "emotional", text: "I was taught that showing emotions is a sign of weakness.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "emotional", text: "I struggle to identify or name my feelings.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            
+            // Success (22-24)
+            { category: "success", text: "I sabotage my own success when things start going well.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "success", text: "I feel guilty or undeserving when I receive money or success.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] },
+            { category: "success", text: "I have limiting beliefs about money passed down from my family.", options: ["Never", "Rarely", "Sometimes", "Often", "Always"] }
+        ];
+        
+        const traumaDescriptions = {
+            childhood: {
+                title: "Childhood Wounds",
+                desc: "Unresolved experiences from early life may be influencing your current patterns.",
+                signs: ["Difficulty setting boundaries", "People-pleasing tendencies", "Fear of authority figures", "Inner critic is harsh"],
+                healing: ["Inner child work and journaling", "EMDR or somatic therapy", "Reparenting exercises"]
+            },
+            attachment: {
+                title: "Attachment Trauma",
+                desc: "Early bonding experiences may have created patterns in how you connect with others.",
+                signs: ["Difficulty trusting partners", "Fear of intimacy", "Anxious or avoidant in relationships", "Repeating unhealthy relationship patterns"],
+                healing: ["Attachment-focused therapy", "Building secure relationships slowly", "Learning to communicate needs"]
+            },
+            selfworth: {
+                title: "Self-Worth Wounds",
+                desc: "Core beliefs about your value may have been shaped by past experiences.",
+                signs: ["Imposter syndrome", "Difficulty receiving", "Overworking to prove worth", "Negative self-talk"],
+                healing: ["Cognitive restructuring exercises", "Daily affirmations practice", "Celebrating small wins"]
+            },
+            abandonment: {
+                title: "Abandonment Trauma",
+                desc: "Past losses or separations may have created deep fears of being left.",
+                signs: ["Clinginess in relationships", "Extreme reactions to perceived rejection", "Staying in unhealthy situations", "Fear of being alone"],
+                healing: ["Building self-reliance", "Processing grief and loss", "Developing secure base within yourself"]
+            },
+            rejection: {
+                title: "Rejection Sensitivity",
+                desc: "Past experiences of rejection may be creating hypervigilance to criticism.",
+                signs: ["Avoiding new opportunities", "Social anxiety", "Defensive reactions", "Seeking constant approval"],
+                healing: ["Gradual exposure to safe risks", "Reframing rejection as redirection", "Building resilience through small wins"]
+            },
+            control: {
+                title: "Control & Safety Issues",
+                desc: "Past chaos or unpredictability may have created a need for excessive control.",
+                signs: ["Anxiety in uncertain situations", "Micromanaging", "Difficulty relaxing", "Fear of the unknown"],
+                healing: ["Mindfulness and grounding practices", "Learning to sit with uncertainty", "Building trust gradually"]
+            },
+            emotional: {
+                title: "Emotional Suppression",
+                desc: "You may have learned to hide or disconnect from your emotions.",
+                signs: ["Difficulty crying or expressing joy", "Feeling numb", "Emotional outbursts", "Physical tension"],
+                healing: ["Somatic experiencing", "Journaling emotions daily", "Safe spaces to express feelings"]
+            },
+            success: {
+                title: "Success Blocks",
+                desc: "Unconscious beliefs may be preventing you from achieving your full potential.",
+                signs: ["Self-sabotage patterns", "Procrastination before breakthroughs", "Guilt around money", "Playing small"],
+                healing: ["Money mindset work", "Identifying inherited beliefs", "Permission to succeed exercises"]
+            }
+        };
+        
+        let currentQuestion = 0;
+        let answers = {};
+        let scores = {};
+        
+        function startAssessment() {
+            document.getElementById('welcome').classList.add('hidden');
+            document.getElementById('questions').classList.remove('hidden');
+            document.getElementById('totalQ').textContent = questions.length;
+            showQuestion();
+        }
+        
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('categoryLabel').textContent = categories[q.category].icon + ' ' + categories[q.category].name;
+            document.getElementById('questionText').textContent = q.text;
+            document.getElementById('currentQ').textContent = currentQuestion + 1;
+            document.getElementById('progress').style.width = ((currentQuestion + 1) / questions.length * 100) + '%';
+            
+            const optionsHtml = q.options.map((opt, i) => `
+                <div class="option ${answers[currentQuestion] === i ? 'selected' : ''}" onclick="selectOption(${i})">
+                    <div class="option-circle"></div>
+                    <span class="option-text">${opt}</span>
+                </div>
+            `).join('');
+            document.getElementById('optionsContainer').innerHTML = optionsHtml;
+            
+            document.getElementById('backBtn').style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+            document.getElementById('nextBtn').disabled = answers[currentQuestion] === undefined;
+            document.getElementById('nextBtn').textContent = currentQuestion === questions.length - 1 ? 'See Results →' : 'Next →';
+        }
+        
+        function selectOption(index) {
+            answers[currentQuestion] = index;
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.toggle('selected', i === index);
+            });
+            document.getElementById('nextBtn').disabled = false;
+        }
+        
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+        
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+        
+        function calculateScores() {
+            scores = {};
+            questions.forEach((q, i) => {
+                if (!scores[q.category]) scores[q.category] = { total: 0, count: 0 };
+                // Higher answer index = more trauma indication (for most questions)
+                scores[q.category].total += answers[i] || 0;
+                scores[q.category].count++;
+            });
+            
+            // Calculate averages (0-4 scale)
+            Object.keys(scores).forEach(cat => {
+                scores[cat].avg = scores[cat].total / scores[cat].count;
+                scores[cat].level = scores[cat].avg >= 3 ? 'high' : (scores[cat].avg >= 2 ? 'medium' : 'low');
+            });
+            
+            return scores;
+        }
+        
+        function showResults() {
+            document.getElementById('questions').classList.add('hidden');
+            document.getElementById('results').classList.add('active');
+            
+            calculateScores();
+            
+            // Sort by score (highest first)
+            const sorted = Object.entries(scores).sort((a, b) => b[1].avg - a[1].avg);
+            
+            let resultsHtml = '';
+            let healingItems = new Set();
+            
+            sorted.forEach(([cat, data]) => {
+                if (data.avg < 1) return; // Skip very low scores
+                
+                const info = traumaDescriptions[cat];
+                const levelLabel = data.level === 'high' ? 'Significant' : (data.level === 'medium' ? 'Moderate' : 'Mild');
+                
+                resultsHtml += `
+                    <div class="trauma-card ${data.level}">
+                        <div class="trauma-header">
+                            <span class="trauma-title">${categories[cat].icon} ${info.title}</span>
+                            <span class="trauma-level ${data.level}">${levelLabel}</span>
+                        </div>
+                        <p class="trauma-desc">${info.desc}</p>
+                        <div class="trauma-signs">
+                            <strong>Common signs:</strong>
+                            <ul>${info.signs.map(s => `<li>${s}</li>`).join('')}</ul>
+                        </div>
+                    </div>
+                `;
+                
+                // Add healing recommendations
+                if (data.level !== 'low') {
+                    info.healing.forEach(h => healingItems.add(h));
+                }
+            });
+            
+            document.getElementById('resultsContainer').innerHTML = resultsHtml || '<p style="text-align:center;color:#666;">No significant trauma patterns detected. You appear to have a strong foundation!</p>';
+            
+            // Show healing recommendations
+            const healingHtml = Array.from(healingItems).slice(0, 6).map(item => `
+                <li><span class="healing-icon">✨</span> ${item}</li>
+            `).join('');
+            document.getElementById('healingList').innerHTML = healingHtml || '<li><span class="healing-icon">🌟</span> Continue your self-awareness journey</li>';
+        }
+        
+        function restartAssessment() {
+            currentQuestion = 0;
+            answers = {};
+            scores = {};
+            document.getElementById('results').classList.remove('active');
+            document.getElementById('welcome').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
