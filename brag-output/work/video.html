@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{--cream:#F5F3EE;--ink:#111821;--accent:#0E6E55;--signal:#3DDC97;--line:#DAD5CB;--muted:#4A5059;--red:#C8442A}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--ink)}
+body{font-family:'IBM Plex Sans',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.stage{position:absolute;inset:0;overflow:hidden}
+.scene{position:absolute;inset:0;overflow:hidden}
+.abs{position:absolute}
+.bric{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-0.035em}
+.mono{font-family:'IBM Plex Mono',monospace}
+.label{font-family:'IBM Plex Mono',monospace;font-size:30px;letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+.w{display:inline-block;will-change:transform,opacity}
+.tap{position:absolute;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:5px solid rgba(17,24,33,.55);background:rgba(17,24,33,.12);pointer-events:none}
+.pill{display:inline-flex;align-items:center;gap:14px;border-radius:999px}
+img{display:block}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+<!-- ================= S1 HOOK ================= -->
+<div class="scene" id="s1" style="background:#0A0F16">
+  <div class="abs" id="s1glow" style="left:-200px;top:300px;width:1480px;height:1480px;border-radius:50%;background:radial-gradient(circle,rgba(200,68,42,.18),rgba(200,68,42,0) 60%)"></div>
+  <!-- call card -->
+  <div class="abs" id="s1call" style="left:140px;top:250px;width:800px;padding:40px 44px;border-radius:40px;background:#161E29;border:1.5px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:30px">
+    <div style="width:104px;height:104px;border-radius:50%;background:#253041;display:flex;align-items:center;justify-content:center;color:#7E8794;font-family:'Bricolage Grotesque';font-weight:800;font-size:50px">?</div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+      <span style="color:#F5F3EE;font-size:38px;font-weight:600">Appel sortant…</span>
+      <span class="mono" id="s1timer" style="color:#7E8794;font-size:28px">00:00</span>
+    </div>
+    <div id="s1hang" style="width:104px;height:104px;border-radius:50%;background:#C8442A;display:flex;align-items:center;justify-content:center">
+      <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(135deg)"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+    </div>
+  </div>
+  <div class="abs" id="s1chip" style="left:140px;top:470px;">
+    <span class="pill" style="padding:14px 24px;background:rgba(200,68,42,.16);color:#F0A08F;font-size:28px;font-weight:600">
+      <span style="width:14px;height:14px;border-radius:50%;background:#E0603F"></span>Inscrit sur Bloctel&nbsp;?
+    </span>
+  </div>
+  <div class="abs label" id="s1label" style="left:140px;top:760px;color:#E0603F">Le démarchage à froid</div>
+  <div class="abs bric" id="s1text" style="left:140px;top:830px;width:820px;font-size:100px;line-height:1.02;color:#F5F3EE"></div>
+  <div class="abs" id="s1x" style="left:140px;top:1460px;width:150px;height:150px;border-radius:50%;background:#C8442A;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 60px rgba(200,68,42,.4)">
+    <svg width="74" height="74" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+  </div>
+  <div class="abs" id="s1x2" style="left:320px;top:1490px;color:#9AA3AF;font-size:34px;line-height:1.35;width:640px">Aucune preuve horodatée<br>en cas de litige.</div>
+</div>
+
+<!-- ================= S2 REVEAL ================= -->
+<div class="scene" id="s2" style="background:var(--cream)">
+  <div class="abs" id="s2logo" style="left:80px;top:150px;display:flex;align-items:center;gap:22px">
+    <span style="width:84px;height:84px;border-radius:22px;background:var(--ink);display:flex;align-items:center;justify-content:center">
+      <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#F5F3EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9.5 15l2 2 3.5-4"/></svg>
+    </span>
+    <span class="bric" style="font-size:62px;letter-spacing:-0.02em">Mand<span style="color:var(--accent)">IMMO</span></span>
+  </div>
+  <div class="abs" id="s2pill" style="left:80px;top:300px">
+    <span class="pill" style="padding:16px 26px;border:1.5px solid var(--line);background:#fff;font-size:28px;font-weight:500">
+      <span style="width:14px;height:14px;border-radius:50%;background:var(--accent)"></span>Depuis le 11 août, la prospection a changé
+    </span>
+  </div>
+  <div class="abs bric" id="s2h1" style="left:80px;top:420px;width:940px;font-size:118px;line-height:.98">
+    <div class="ln"><span>Appelez des</span></div>
+    <div class="ln"><span>propriétaires</span></div>
+    <div class="ln"><span>qui <span style="color:var(--accent)">attendent</span></span></div>
+    <div class="ln"><span>votre estimation.</span></div>
+  </div>
+  <div class="abs" id="s2photo" style="left:80px;top:990px;width:920px;height:760px;border-radius:40px;overflow:hidden">
+    <img id="s2img" src="site/assets/aa14a9f61fef1a06b81fea3382903b68.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center 60%">
+  </div>
+</div>
+
+<!-- ================= S3 OWNER JOURNEY ================= -->
+<div class="scene" id="s3" style="background:var(--cream)">
+  <div class="abs label" id="s3label" style="left:80px;top:140px;color:var(--accent)">Fonctionnement</div>
+  <div class="abs" id="s3heads" style="left:80px;top:200px;width:940px;height:240px">
+    <div class="abs s3h" style="left:0;top:0;width:940px"><span class="mono" style="color:var(--accent);font-size:36px">01</span><div class="bric" style="font-size:76px;line-height:1.02;margin-top:6px">Diffusez votre lien ou QR code</div></div>
+    <div class="abs s3h" style="left:0;top:0;width:940px"><span class="mono" style="color:var(--accent);font-size:36px">02</span><div class="bric" style="font-size:76px;line-height:1.02;margin-top:6px">Le propriétaire décrit son projet</div></div>
+    <div class="abs s3h" style="left:0;top:0;width:940px"><span class="mono" style="color:var(--accent);font-size:36px">03</span><div class="bric" style="font-size:76px;line-height:1.02;margin-top:6px">Il coche et confirme son accord</div></div>
+  </div>
+  <!-- phone -->
+  <div class="abs" id="phone" style="left:210px;top:520px;width:660px;height:1290px;border-radius:84px;background:var(--ink);padding:22px;box-shadow:0 60px 120px -50px rgba(17,24,33,.6)">
+    <div style="position:relative;width:100%;height:100%;border-radius:64px;overflow:hidden;background:#fff" id="screen">
+      <div style="position:absolute;left:50%;top:22px;width:170px;height:44px;margin-left:-85px;border-radius:30px;background:var(--ink);z-index:5"></div>
+
+      <!-- screen A : flyer scan -->
+      <div class="abs scr" id="scrA" style="inset:0;background:#E9E5DC">
+        <div class="abs" id="flyer" style="left:60px;top:150px;width:496px;height:900px;background:#fff;border-radius:18px;box-shadow:0 30px 60px -30px rgba(0,0,0,.35);overflow:hidden">
+          <img src="site/assets/73cc24281d425b67ea4d7180afe32ec1.jpg" style="width:100%;height:300px;object-fit:cover">
+          <div style="padding:30px 34px;display:flex;flex-direction:column;gap:22px">
+            <span class="mono" style="font-size:20px;letter-spacing:.1em;color:var(--accent)">FLYER QUARTIER</span>
+            <span class="bric" style="font-size:52px;line-height:1">Estimez votre bien en 2 min</span>
+            <div style="display:flex;justify-content:center;margin-top:8px"><div id="qr" style="width:260px;height:260px;position:relative"></div></div>
+          </div>
+        </div>
+        <!-- camera viewfinder -->
+        <div class="abs" id="finder" style="left:168px;top:640px;width:280px;height:280px">
+          <div class="abs" style="left:0;top:0;width:60px;height:60px;border-left:8px solid var(--signal);border-top:8px solid var(--signal);border-radius:16px 0 0 0"></div>
+          <div class="abs" style="right:0;top:0;width:60px;height:60px;border-right:8px solid var(--signal);border-top:8px solid var(--signal);border-radius:0 16px 0 0"></div>
+          <div class="abs" style="left:0;bottom:0;width:60px;height:60px;border-left:8px solid var(--signal);border-bottom:8px solid var(--signal);border-radius:0 0 0 16px"></div>
+          <div class="abs" style="right:0;bottom:0;width:60px;height:60px;border-right:8px solid var(--signal);border-bottom:8px solid var(--signal);border-radius:0 0 16px 0"></div>
+          <div class="abs" id="scanline" style="left:14px;right:14px;height:6px;border-radius:3px;background:var(--signal);box-shadow:0 0 24px var(--signal)"></div>
+        </div>
+        <div class="abs" id="scanpill" style="left:0;right:0;top:1100px;display:flex;justify-content:center">
+          <span class="pill" style="padding:18px 30px;background:var(--ink);color:#fff;font-size:28px;font-weight:600"><span style="width:14px;height:14px;border-radius:50%;background:var(--signal)"></span>QR code détecté</span>
+        </div>
+      </div>
+
+      <!-- screen B : form -->
+      <div class="abs scr" id="scrB" style="left:0;top:0;width:481px;height:974px;zoom:1.28;background:var(--cream);padding:86px 30px 0">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:34px">
+          <span style="width:56px;height:56px;border-radius:14px;background:var(--ink);display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#F5F3EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9.5 15l2 2 3.5-4"/></svg></span>
+          <span style="font-size:26px;font-weight:600">Estimation de votre bien</span>
+        </div>
+        <div class="bric" style="font-size:54px;line-height:1.02;margin-bottom:36px">Votre projet</div>
+        <div class="mono" style="font-size:20px;color:var(--muted);letter-spacing:.08em;margin-bottom:14px">TYPE DE BIEN</div>
+        <div style="display:flex;gap:14px;margin-bottom:36px">
+          <span class="chip" id="chipMaison" style="padding:18px 30px;border-radius:999px;border:2px solid var(--line);font-size:28px;font-weight:600;background:#fff">Maison</span>
+          <span style="padding:18px 30px;border-radius:999px;border:2px solid var(--line);font-size:28px;font-weight:600;background:#fff">Appartement</span>
+        </div>
+        <div class="mono" style="font-size:20px;color:var(--muted);letter-spacing:.08em;margin-bottom:14px">LOCALISATION</div>
+        <div style="height:88px;border-radius:20px;border:2px solid var(--line);background:#fff;display:flex;align-items:center;padding:0 26px;font-size:30px;margin-bottom:36px"><span id="cityTxt"></span><span id="caret" style="width:3px;height:36px;background:var(--accent);margin-left:2px"></span></div>
+        <div class="mono" style="font-size:20px;color:var(--muted);letter-spacing:.08em;margin-bottom:14px">DÉLAI DE VENTE</div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <span style="padding:18px 26px;border-radius:999px;border:2px solid var(--line);font-size:28px;font-weight:600;background:#fff">&lt; 3 mois</span>
+          <span id="chipDelai" style="padding:18px 26px;border-radius:999px;border:2px solid var(--line);font-size:28px;font-weight:600;background:#fff">3 à 6 mois</span>
+        </div>
+      </div>
+
+      <!-- screen C : consent -->
+      <div class="abs scr" id="scrC" style="left:0;top:0;width:481px;height:974px;zoom:1.28;background:var(--cream);padding:86px 30px 0">
+        <div class="bric" style="font-size:54px;line-height:1.02;margin-bottom:24px">Dernière étape</div>
+        <p style="font-size:26px;color:var(--muted);line-height:1.45;margin-bottom:40px">Vos coordonnées restent confidentielles et ne sont transmises qu'à votre conseiller.</p>
+        <div id="consentBox" style="border-radius:24px;border:2px solid var(--line);background:#fff;padding:30px;display:flex;gap:24px;align-items:flex-start">
+          <span id="cb" style="flex-shrink:0;width:56px;height:56px;border-radius:14px;border:3px solid #A9B1BC;display:flex;align-items:center;justify-content:center;background:#fff">
+            <svg id="cbTick" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+          </span>
+          <span style="font-size:28px;line-height:1.4;font-weight:500">J'accepte d'être recontacté par ce conseiller au sujet de mon projet.</span>
+        </div>
+        <div class="mono" style="font-size:20px;color:var(--muted);margin:18px 4px 40px">Case non pré-cochée</div>
+        <div id="confirmBtn" style="height:100px;border-radius:999px;background:var(--accent);color:#fff;font-size:32px;font-weight:600;display:flex;align-items:center;justify-content:center">Confirmer ma demande</div>
+        <div id="toast" class="abs" style="left:30px;right:30px;top:770px;border-radius:24px;background:var(--ink);color:#F5F3EE;padding:28px 30px;display:flex;align-items:center;gap:20px">
+          <span style="width:56px;height:56px;border-radius:50%;background:var(--signal);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111821" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+          <span style="display:flex;flex-direction:column;gap:4px"><strong style="font-size:30px;font-weight:600">E-mail confirmé</strong><span class="mono" style="font-size:22px;color:#A9B1BC">Double opt-in · horodaté</span></span>
+        </div>
+      </div>
+      <div class="tap" id="tap"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= S4 LEAD LANDS ================= -->
+<div class="scene" id="s4" style="background:var(--cream)">
+  <div class="abs" id="s4head" style="left:80px;top:160px;width:940px">
+    <span class="mono" style="color:var(--accent);font-size:36px">04</span>
+    <div class="bric" style="font-size:76px;line-height:1.02;margin-top:6px">Vous recevez le contact et la preuve</div>
+  </div>
+  <div class="abs" id="s4photo" style="left:80px;top:470px;width:920px;height:700px;border-radius:40px;overflow:hidden">
+    <img id="s4img" src="site/assets/aa14a9f61fef1a06b81fea3382903b68.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center 60%">
+  </div>
+  <div class="abs" id="s4badge" style="right:110px;top:510px;background:#fff;border:1.5px solid var(--line);border-radius:26px;padding:22px 28px;display:flex;align-items:center;gap:20px;box-shadow:0 24px 50px -24px rgba(17,24,33,.45)">
+    <span style="width:64px;height:64px;border-radius:16px;background:#E6F2EE;display:flex;align-items:center;justify-content:center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0E6E55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 15h8"/><path d="M8 18h5"/></svg></span>
+    <span style="display:flex;flex-direction:column;line-height:1.3"><strong style="font-size:28px">Registre de consentement</strong><span style="font-size:24px;color:var(--muted)">Export CSV en un clic</span></span>
+  </div>
+  <div class="abs" id="s4card" style="left:80px;top:960px;width:920px;background:var(--ink);color:#F5F3EE;border-radius:40px;padding:48px;display:flex;flex-direction:column;gap:34px;box-shadow:0 50px 90px -40px rgba(17,24,33,.7)">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="mono" style="font-size:24px;letter-spacing:.08em;color:#A9B1BC">NOUVELLE DEMANDE</span>
+      <span id="s4consent" class="pill" style="padding:12px 22px;background:rgba(255,255,255,.08);font-size:24px;font-weight:600"><span style="width:14px;height:14px;border-radius:50%;background:var(--signal)"></span>Consentement confirmé</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span class="bric" style="font-size:60px;letter-spacing:-0.02em">Claire M.</span>
+      <span style="color:#C5CBD3;font-size:30px">Maison · Lyon 69003 · Vente sous 3 à 6 mois</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+      <div style="background:rgba(255,255,255,.06);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:6px"><span style="font-size:24px;color:#A9B1BC">Source</span><span class="mono" style="font-size:28px">QR · flyer quartier</span></div>
+      <div style="background:rgba(255,255,255,.06);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:6px"><span style="font-size:24px;color:#A9B1BC">Signal de vente</span><span class="mono" style="font-size:28px;color:var(--signal)">Élevé</span></div>
+    </div>
+    <div style="border-top:2px dashed rgba(255,255,255,.22);padding-top:28px;display:flex;flex-direction:column;gap:16px;font-family:'IBM Plex Mono',monospace;font-size:25px;color:#C5CBD3">
+      <div style="display:flex;justify-content:space-between"><span>Case cochée par le propriétaire</span><span id="ts1" style="color:#F5F3EE"></span></div>
+      <div style="display:flex;justify-content:space-between"><span>Confirmation e-mail</span><span id="ts2" style="color:#F5F3EE"></span></div>
+    </div>
+    <div id="callBtn" style="position:relative;overflow:hidden;height:96px;border-radius:22px;background:#F5F3EE;color:var(--ink);font-weight:600;font-size:32px;display:flex;align-items:center;justify-content:center;gap:16px">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#111821" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+      Appeler le propriétaire
+      <span id="callRipple" class="abs" style="width:300px;height:300px;border-radius:50%;background:rgba(14,110,85,.25)"></span>
+    </div>
+  </div>
+  <div class="tap" id="tap4" style="border-color:rgba(245,243,238,.7);background:rgba(245,243,238,.15)"></div>
+</div>
+
+<!-- ================= S5 PUNCHLINE ================= -->
+<div class="scene" id="s5" style="background:#0A0F16">
+  <img id="s5img" class="abs" src="site/assets/6ab1c6470eb09b1e96302f5b8c11f604.jpg" style="left:0;top:0;width:1080px;height:1920px;object-fit:cover;object-position:42% center">
+  <div class="abs" style="inset:0;background:linear-gradient(180deg,rgba(10,15,22,.55) 0%,rgba(10,15,22,.72) 45%,rgba(10,15,22,.9) 100%)"></div>
+  <div class="abs" id="s5logo" style="left:80px;top:150px;display:flex;align-items:center;gap:20px">
+    <span style="width:76px;height:76px;border-radius:20px;background:#F5F3EE;display:flex;align-items:center;justify-content:center"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#111821" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9.5 15l2 2 3.5-4"/></svg></span>
+    <span class="bric" style="font-size:56px;color:#fff;letter-spacing:-0.02em">Mand<span style="color:var(--signal)">IMMO</span></span>
+  </div>
+  <div class="abs bric" id="s5h" style="left:80px;top:560px;width:930px;font-size:112px;line-height:1;color:#fff"></div>
+  <div class="abs" id="s5price" style="left:80px;top:1130px;display:flex;align-items:baseline;gap:18px;color:#fff">
+    <span class="bric" style="font-size:120px;letter-spacing:-0.04em">29 €</span><span style="font-size:40px;color:#E6E9ED">/ mois · Sans engagement</span>
+  </div>
+  <div class="abs" id="s5checks" style="left:80px;top:1310px;display:flex;flex-direction:column;gap:18px;color:#E6E9ED;font-size:34px;font-weight:500">
+    <span class="ck" style="display:flex;align-items:center;gap:16px"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3DDC97" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Conforme Bloctel et RGPD</span>
+    <span class="ck" style="display:flex;align-items:center;gap:16px"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3DDC97" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Leads exclusifs, jamais partagés</span>
+  </div>
+  <div class="abs" id="s5cta" style="left:80px;right:80px;top:1560px;display:flex;justify-content:space-between;align-items:center">
+    <span style="display:inline-flex;align-items:center;height:110px;padding:0 48px;border-radius:999px;background:#fff;color:var(--ink);font-weight:600;font-size:36px">Démarrer mon essai gratuit</span>
+    <span class="mono" style="color:#fff;font-size:36px">mandimmo.com</span>
+  </div>
+</div>
+
+<!-- dip overlay -->
+<div class="abs" id="dip" style="inset:0;pointer-events:none"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,a,b)=>cl((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3);
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const back=x=>{const c=1.6;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+function S(el,o,{x=0,y=0,s=1,r=0,blur=0}={}){if(typeof el==='string')el=$(el);el.style.opacity=o;el.style.transform=`translate(${x}px,${y}px) scale(${s}) rotate(${r}deg)`;el.style.filter=blur?`blur(${blur}px)`:'none';el.style.visibility=o<=0.001?'hidden':'visible'}
+// rise-in helper: progress p -> opacity & y
+const rise=(p,d=60)=>[eo(p),{y:(1-eo(p))*d}];
+
+// --- build word spans
+function words(el,html){el.innerHTML=html.split(' ').map(w=>`<span class="w">${w}</span>`).join(' ');return [...el.querySelectorAll('.w')];}
+const s1w=words($('s1text'),'Vous appelez des propriétaires agacés qui n\'ont rien demandé.');
+const s5w=words($('s5h'),'Votre prochain mandat a déjà scanné votre flyer.');
+// QR code (decorative)
+(function(){const n=25,c=260/n;let h='';let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+ const fin=(x,y)=>{const inF=(fx,fy)=>x>=fx&&x<fx+7&&y>=fy&&y<fy+7;for(const[fx,fy]of[[0,0],[n-7,0],[0,n-7]])if(inF(fx,fy)){const dx=x-fx,dy=y-fy;return (dx==0||dx==6||dy==0||dy==6||(dx>=2&&dx<=4&&dy>=2&&dy<=4))?1:0}return -1};
+ for(let y=0;y<n;y++)for(let x=0;x<n;x++){let f=fin(x,y);let on=f===-1?(rnd()<.48):f;if((x==7||y==7||x==n-8||y==n-8)&&f===-1&&((x<8&&y<8)||(x>n-9&&y<8)||(x<8&&y>n-9)))on=0;if(on)h+=`<div style="position:absolute;left:${x*c}px;top:${y*c}px;width:${c+.5}px;height:${c+.5}px;background:#111821"></div>`}
+ $('qr').innerHTML=h})();
+const ln2=[...document.querySelectorAll('#s2h1 .ln')];ln2.forEach(l=>{l.style.overflow='hidden';l.style.paddingBottom='8px';l.firstElementChild.style.display='inline-block'});
+const heads=[...document.querySelectorAll('.s3h')];
+const checks=[...document.querySelectorAll('#s5checks .ck')];
+
+const T={s1:[0,4.3],s2:[4.3,8.4],s3:[8.4,13.7],s4:[13.7,18.0],s5:[18.0,22.5]};
+const vis=(id,t)=>{const[a,b]=T[id];const on=t>=a-0.001&&t<b+0.35;$(id).style.display=on?'block':'none';return on};
+
+function ctr(target,host,dx=0){const r=target.getBoundingClientRect(),h=host.getBoundingClientRect();return [r.left-h.left+r.width/2+dx,r.top-h.top+r.height/2]}
+function tapAt(el,t,t0,x,y){if(typeof x==='object'){[x,y]=ctr(x,el.parentElement,y||0)}const p=P(t,t0-0.25,t0+0.35);if(p<=0||p>=1){el.style.opacity=0;return}
+ const press=t<t0?eo(P(t,t0-.25,t0)):1;el.style.left=x+'px';el.style.top=y+'px';
+ const out=P(t,t0,t0+.35);el.style.opacity=(press*(1-out)).toFixed(3);el.style.transform=`scale(${t<t0?1.3-.5*press:.8+out*.9})`}
+
+window.render=function(t){
+ // ---------- S1
+ if(vis('s1',t)){
+  const out=P(t,4.0,4.3);
+  S('s1call',eo(P(t,0,.4))*(1-out),{y:(1-eo(P(t,0,.4)))*-40});
+  $('s1timer').textContent='00:0'+Math.min(9,Math.floor(t+1));
+  const ring=Math.sin(t*14)*Math.max(0,1-P(t,0,2.2))*3;$('s1hang').style.transform=`rotate(${ring}deg)`;
+  S('s1chip',eo(P(t,.5,.8))*(1-out),{x:(1-eo(P(t,.5,.8)))*-30});
+  S('s1label',eo(P(t,.15,.45))*(1-out));
+  s1w.forEach((w,i)=>{const p=P(t,.25+i*.09,.25+i*.09+.3);S(w,eo(p)*(1-out),{y:(1-eo(p))*50,blur:(1-p)*6})});
+  const xp=P(t,2.0,2.3);S('s1x',cl(xp*3)*(1-out),{s:xp>0?back(xp):0.01,r:(1-xp)*-30});
+  S('s1x2',eo(P(t,2.25,2.6))*(1-out),{x:(1-eo(P(t,2.25,2.6)))*-30});
+  $('s1glow').style.opacity=.6+.4*Math.sin(t*3);
+ }
+ // ---------- S2
+ if(vis('s2',t)){
+  const a=4.3,out=P(t,8.15,8.45);
+  const wipe=eio(P(t,4.15,4.6));$('s2').style.clipPath=`inset(${(1-wipe)*100}% 0 0 0)`;
+  let p=P(t,a+.25,a+.6);S('s2logo',eo(p)*(1-out),{s:.85+.15*back(p),y:-out*60});
+  p=P(t,a+.45,a+.8);S('s2pill',eo(p)*(1-out),{y:(1-eo(p))*30-out*60});
+  ln2.forEach((l,i)=>{const q=P(t,a+.55+i*.13,a+.55+i*.13+.45);l.firstElementChild.style.transform=`translateY(${(1-eo(q))*110}%)`;l.style.opacity=1-out;l.style.transform=`translateY(${-out*60}px)`});
+  p=P(t,a+.9,a+1.5);S('s2photo',eo(p)*(1-out),{y:(1-eo(p))*200-out*60});
+  $('s2img').style.transform=`scale(${1.15-0.1*P(t,a+.9,8.4)})`;
+ }else $('s2').style.clipPath='none';
+ // ---------- S3
+ if(vis('s3',t)){
+  const a=8.4,out=P(t,13.45,13.75);
+  S('s3label',eo(P(t,a+.05,a+.35))*(1-out));
+  const hw=[[a,10.15],[10.15,11.85],[11.85,13.75]];
+  heads.forEach((h,i)=>{const[h0,h1]=hw[i];const pin=P(t,h0+.08,h0+.4),pout=i<2?P(t,h1-.18,h1+.02):out;S(h,eo(pin)*(1-pout),{y:(1-eo(pin))*50-pout*40})});
+  let p=P(t,a,a+.55);S('phone',eo(p)*(1-out),{y:(1-eo(p))*500,s:1-out*.06});
+  // screens: A a..10.15, B ..11.85, C after
+  const sa=$('scrA'),sb=$('scrB'),sc=$('scrC');
+  const ao=P(t,9.95,10.15),bi=P(t,10.15,10.4),bo=P(t,11.65,11.85),ci=P(t,11.85,12.1);
+  S(sa,1-ao,{x:-eio(ao)*120});S(sb,eo(bi)*(1-bo),{x:(1-eo(bi))*120-eio(bo)*120});S(sc,eo(ci),{x:(1-eo(ci))*120});
+  // flyer + scan
+  $('flyer').style.transform=`rotate(${-3+2*P(t,a,10)}deg) scale(${1+0.05*P(t,a,10)})`;
+  const sl=((t-a-0.4)*1.4)%1;$('scanline').style.top=(14+Math.abs(Math.sin(Math.PI*cl(sl)))*252)+'px';
+  S('finder',eo(P(t,a+.45,a+.7)));
+  S('scanpill',eo(P(t,9.45,9.7)),{y:(1-eo(P(t,9.45,9.7)))*30,s:.9+.1*back(P(t,9.45,9.7))});
+  $('qr').style.filter=t>9.45&&t<9.6?'brightness(1.6)':'none';
+  // form
+  const tm=10.55;tapAt($('tap'),t,tm,$('chipMaison'));
+  const mOn=t>=tm;const cm=$('chipMaison');cm.style.background=mOn?'#111821':'#fff';cm.style.color=mOn?'#fff':'#111821';cm.style.borderColor=mOn?'#111821':'#DAD5CB';
+  const city='Lyon 69003';const nc=Math.floor(cl((t-10.75)/.55)*city.length);$('cityTxt').textContent=city.slice(0,nc);
+  $('caret').style.opacity=(t>10.6&&t<11.5&&Math.floor(t*4)%2==0)?1:0;
+  const td=11.45;if(t>=11.2&&t<11.85)tapAt($('tap'),t,td,$('chipDelai'));
+  const dOn=t>=td;const cd=$('chipDelai');cd.style.background=dOn?'#111821':'#fff';cd.style.color=dOn?'#fff':'#111821';cd.style.borderColor=dOn?'#111821':'#DAD5CB';
+  // consent
+  const tcb=12.3;if(t>=12.0&&t<12.75)tapAt($('tap'),t,tcb,$('cb'));
+  const cOn=t>=tcb;$('cb').style.background=cOn?'#0E6E55':'#fff';$('cb').style.borderColor=cOn?'#0E6E55':'#A9B1BC';
+  $('cbTick').style.transform=`scale(${cOn?back(P(t,tcb,tcb+.25)):0})`;$('consentBox').style.borderColor=cOn?'#0E6E55':'#DAD5CB';
+  const tcf=12.75;if(t>=12.5)tapAt($('tap'),t,tcf,$('confirmBtn'),60);
+  $('confirmBtn').style.transform=`scale(${t>tcf-.1&&t<tcf+.1?.96:1})`;
+  p=P(t,12.95,13.25);S('toast',eo(p),{y:(1-eo(p))*80});
+ }
+ // ---------- S4
+ if(vis('s4',t)){
+  const a=13.7,out=P(t,17.7,18.0);
+  let p=P(t,a+.05,a+.4);S('s4head',eo(p)*(1-out),{y:(1-eo(p))*50});
+  p=P(t,a,a+.5);S('s4photo',eo(p)*(1-out),{s:.94+.06*eo(p)});
+  $('s4img').style.transform=`scale(${1.12-0.08*P(t,a,18)})`;
+  p=P(t,a+.35,a+.95);S('s4card',(p>0?1:0)*(1-out),{y:(1-eo(p))*1100});
+  S('s4consent',eo(P(t,14.75,15.0)),{s:.8+.2*back(P(t,14.75,15.0))});
+  const typ=(s,t0)=>s.slice(0,Math.floor(cl((t-t0)/.45)*s.length));
+  $('ts1').textContent=typ('02/10 14:32:07',14.95);$('ts2').textContent=typ('02/10 14:33:41',15.3);
+  p=P(t,15.75,16.05);S('s4badge',eo(p)*(1-out),{s:.85+.15*back(p),y:(1-eo(p))*20});
+  // tap call button (card origin 80,880 ; button near bottom)
+  const tb=16.85;tapAt($('tap4'),t,tb,$('callBtn'),80);
+  const rp=P(t,tb,tb+.6);$('callRipple').style.opacity=rp>0&&rp<1?(1-rp):0;$('callRipple').style.transform=`scale(${rp*4})`;
+  $('callBtn').style.transform=`scale(${t>tb-.1&&t<tb+.12?.97:1})`;
+ }
+ // ---------- S5
+ if(vis('s5',t)){
+  const a=18.0;
+  $('s5img').style.transform=`scale(${1.18-0.12*P(t,a,22.5)})`;
+  $('s5').style.opacity=eo(P(t,a,a+.35));
+  S('s5logo',eo(P(t,a+.2,a+.5)),{y:(1-eo(P(t,a+.2,a+.5)))*-30});
+  s5w.forEach((w,i)=>{const q=P(t,a+.3+i*.08,a+.3+i*.08+.35);S(w,eo(q),{y:(1-eo(q))*60,blur:(1-q)*6})});
+  let p=P(t,19.75,20.1);S('s5price',eo(p),{y:(1-eo(p))*40});
+  checks.forEach((c,i)=>{const q=P(t,20.1+i*.15,20.4+i*.15);S(c,eo(q),{x:(1-eo(q))*-30})});
+  p=P(t,20.55,20.9);S('s5cta',eo(p),{y:(1-eo(p))*40});
+ }
+ // dips
+ const d1=Math.max(0,1-Math.abs(t-17.95)/0.2);$('dip').style.background=`rgba(10,15,22,${d1.toFixed(3)})`;
+};
+window.ready=Promise.all([document.fonts.ready,...[...document.images].map(i=>i.complete?1:new Promise(r=>{i.onload=i.onerror=r}))]);
+</script>
+</body>
+</html>
